@@ -1,5 +1,6 @@
 package com.ayman.TimelinePreviewSystem.Service;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -12,9 +13,14 @@ import java.util.List;
 @Getter
 public class SpriteService
 {
-    private  final int THUMBNAIL_WIDTH = 160;
-    private  final int THUMBNAIL_HEIGHT = 90;
-    private  final int COLUMNS = 10;
+    @Value("${app.sprite.thumbnail-width:160}")
+    private int THUMBNAIL_WIDTH;
+
+    @Value("${app.sprite.thumbnail-height:90}")
+    private int THUMBNAIL_HEIGHT;
+
+    @Value("${app.sprite.columns:10}")
+    private int COLUMNS;
 
     public Path generateSprite(List<Path> frames , Path outputPath) throws IOException
     {
@@ -40,6 +46,5 @@ public class SpriteService
         graphics.dispose();
         ImageIO.write(spriteSheet , "jpg" , outputPath.toFile());
         return outputPath;
-
     }
 }
