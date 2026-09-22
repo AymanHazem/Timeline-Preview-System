@@ -24,7 +24,7 @@ public class VTTService
                     .append(x).append(",")
                     .append(y).append(",")
                     .append(thumbnailWidth).append(",")
-                    .append(thumbnailHeight).append(",")
+                    .append(thumbnailHeight)
                     .append("\n\n");
         }
 

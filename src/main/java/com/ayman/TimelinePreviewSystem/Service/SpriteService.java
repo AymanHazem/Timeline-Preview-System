@@ -25,7 +25,7 @@ public class SpriteService
                 BufferedImage.TYPE_INT_RGB);
 
         Graphics2D graphics = spriteSheet.createGraphics();
-        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT);
         for (int i = 0; i < totalFrames; i++)

@@ -24,7 +24,7 @@ public class VideoProcessingService
     private final SpriteService spriteService;
     private final VTTService vttService;
 
-    private String processVideo(MultipartFile file) throws IOException
+    public String processVideo(MultipartFile file) throws IOException
     {
         String videoID = UUID.randomUUID().toString();
         Path uploadPath = Paths.get(uploadDir);
@@ -61,5 +61,11 @@ public class VideoProcessingService
         } catch (Exception e){e.printStackTrace();}
 
         return videoID;
+    }
+    public Path getSpritePath(String videoID) {
+        return Paths.get(outputDir, videoID, "sprite.jpg");
+    }
+    public Path getVTTPath(String videoID) {
+        return Paths.get(outputDir, videoID, "preview.vtt");
     }
 }
