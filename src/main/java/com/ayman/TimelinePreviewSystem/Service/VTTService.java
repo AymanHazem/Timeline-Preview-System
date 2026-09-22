@@ -1,4 +1,4 @@
-package com.ayman.TimelinePreviewSystem.service;
+package com.ayman.TimelinePreviewSystem.Service;
 import org.springframework.stereotype.Service;
 @Service
 public class VTTService
