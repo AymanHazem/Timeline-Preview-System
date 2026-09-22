@@ -1,5 +1,5 @@
-package com.ayman.TimelinePreviewSystem.service;
-import lombok.RequiredArgsConstructor;
+package com.ayman.TimelinePreviewSystem.Service;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 @Service
-
+@Getter
 public class SpriteService
 {
-    private static final int THUMBNAIL_WIDTH = 160;
-    private static final int THUMBNAIL_HEIGHT = 90;
-    private static final int COLUMNS = 10;
+    private  final int THUMBNAIL_WIDTH = 160;
+    private  final int THUMBNAIL_HEIGHT = 90;
+    private  final int COLUMNS = 10;
 
     public Path generateSprite(List<Path> frames , Path outputPath) throws IOException
     {
