@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Generate and preview video timeline thumbnails.">
+    <title>FramePeek — Timeline Preview Demo</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main class="app-shell">
+    <header class="hero">
+        <a class="brand" href="/" aria-label="FramePeek home">
+            <span class="brand-mark" aria-hidden="true">▶</span>
+            <span>FramePeek</span>
+        </a>
+        <div class="eyebrow">Timeline Preview System</div>
+        <h1>Turn any video into<br><span>instant timeline previews.</span></h1>
+        <p class="hero-copy">Upload a video, let FFmpeg build the sprite sheet, then hover over the timeline to see the generated thumbnails.</p>
+    </header>
+
+    <section class="workspace" aria-labelledby="demo-title">
+        <div class="workspace-heading">
+            <div>
+                <p class="section-label">Live demo</p>
+                <h2 id="demo-title">Try it with your video</h2>
+            </div>
+            <span class="status-pill" id="statusPill" data-state="idle">
+                <span class="status-dot"></span>
+                <span id="statusText">Waiting for a video</span>
+            </span>
+        </div>
+
+        <form id="uploadForm">
+            <label class="drop-zone" id="dropZone" for="videoInput">
+                <input id="videoInput" name="file" type="file" accept="video/*" required>
+                <span class="upload-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg>
+                </span>
+                <span class="drop-title" id="dropTitle">Drop your video here</span>
+                <span class="drop-copy" id="dropCopy">or click to browse · up to 1 GB</span>
+            </label>
+
+            <div class="file-row" id="fileRow" hidden>
+                <div class="file-icon">MP4</div>
+                <div class="file-meta">
+                    <strong id="fileName"></strong>
+                    <span id="fileSize"></span>
+                </div>
+                <button class="text-button" id="changeFileButton" type="button">Change</button>
+            </div>
+
+            <button class="primary-button" id="generateButton" type="submit" disabled>
+                <span class="button-label">Generate timeline preview</span>
+                <span class="spinner" aria-hidden="true"></span>
+            </button>
+        </form>
+
+        <div class="message" id="message" role="alert" hidden></div>
+
+        <section class="player-card" id="playerCard" aria-label="Video preview" hidden>
+            <div class="video-frame">
+                <video id="videoPlayer" preload="metadata"></video>
+                <button class="play-button" id="playButton" type="button" aria-label="Play video">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg>
+                </button>
+            </div>
+
+            <div class="controls">
+                <div class="time-row">
+                    <span id="currentTime">00:00</span>
+                    <span id="duration">00:00</span>
+                </div>
+                <div class="timeline" id="timeline">
+                    <div class="thumbnail-preview" id="thumbnailPreview" aria-hidden="true">
+                        <div class="thumbnail-image" id="thumbnailImage"></div>
+                        <span id="thumbnailTime">00:00</span>
+                    </div>
+                    <input id="seekBar" type="range" min="0" max="1000" value="0" aria-label="Video timeline">
+                </div>
+                <p class="timeline-hint" id="timelineHint">Generate previews, then hover over the timeline.</p>
+            </div>
+        </section>
+    </section>
+
+    <footer>
+        <span>Spring Boot + FFmpeg</span>
+        <span>Sprite sheets · WebVTT · Java</span>
+    </footer>
+</main>
+<script src="/app.js" defer></script>
+</body>
+</html>
