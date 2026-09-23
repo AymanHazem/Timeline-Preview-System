@@ -1,5 +1,5 @@
 package com.ayman.TimelinePreviewSystem.Service;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,7 +11,6 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.UUID;
 @Service
-@RequiredArgsConstructor
 public class VideoProcessingService
 {
     @Value("${app.upload-dir:uploads}")
@@ -23,6 +22,13 @@ public class VideoProcessingService
     private final FfmpegService ffmpegService;
     private final SpriteService spriteService;
     private final VTTService vttService;
+
+    public VideoProcessingService(FfmpegService ffmpegService, SpriteService spriteService, VTTService vttService)
+    {
+        this.ffmpegService = ffmpegService;
+        this.spriteService = spriteService;
+        this.vttService = vttService;
+    }
 
     public String processVideo(MultipartFile file) throws IOException
     {

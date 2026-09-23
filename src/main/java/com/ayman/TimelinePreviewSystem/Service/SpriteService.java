@@ -1,5 +1,5 @@
 package com.ayman.TimelinePreviewSystem.Service;
-import lombok.Getter;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 @Service
-@Getter
 public class SpriteService
 {
     @Value("${app.sprite.thumbnail-width:160}")
@@ -21,6 +20,21 @@ public class SpriteService
 
     @Value("${app.sprite.columns:10}")
     private int COLUMNS;
+
+    public int getTHUMBNAIL_WIDTH()
+    {
+        return THUMBNAIL_WIDTH;
+    }
+
+    public int getTHUMBNAIL_HEIGHT()
+    {
+        return THUMBNAIL_HEIGHT;
+    }
+
+    public int getCOLUMNS()
+    {
+        return COLUMNS;
+    }
 
     public Path generateSprite(List<Path> frames , Path outputPath) throws IOException
     {

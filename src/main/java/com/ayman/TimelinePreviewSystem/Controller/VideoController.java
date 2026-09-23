@@ -1,6 +1,6 @@
 package com.ayman.TimelinePreviewSystem.Controller;
 import com.ayman.TimelinePreviewSystem.Service.VideoProcessingService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -14,12 +14,16 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/videos/")
 @CrossOrigin("*")
 public class VideoController
 {
     private final VideoProcessingService videoProcessingService;
+
+    public VideoController(VideoProcessingService videoProcessingService)
+    {
+        this.videoProcessingService = videoProcessingService;
+    }
 
     @PostMapping("/upload")
     public ResponseEntity<Map<String,String>> uploadVideo(@RequestParam("file") MultipartFile videoFile)

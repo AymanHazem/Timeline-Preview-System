@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: timeline-preview-system
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    autoDeployTrigger: commit
+    envVars:
+      - key: MAX_UPLOAD_SIZE
+        value: 100MB
+      - key: JAVA_TOOL_OPTIONS
+        value: -XX:MaxRAMPercentage=60.0 -Djava.awt.headless=true
