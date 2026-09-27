@@ -48,7 +48,7 @@ public class VideoProcessingService
         try
         {
             List<Path>frames = ffmpegService.extractFrames(videoPath,framesPath,frameInterval);
-            if (null == frames)throw new RemoteException("NO FRAME FOUND");
+            if (null == frames)throw new RuntimeException("NO FRAME FOUND");
             Path spritePath = videoOutputPath.resolve("sprite.jpg");
             spriteService.generateSprite(frames , spritePath);
             String spriteURL = "/api/videos/"+videoID+"/sprite";

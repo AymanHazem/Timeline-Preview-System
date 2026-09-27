@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,7 +14,7 @@ public class FfmpegService
     public List<Path> extractFrames(Path videoPath , Path outputDir , int intervalSeconds) throws IOException, InterruptedException {
         Files.createDirectories(outputDir);
         String fps = "1/" + intervalSeconds;
-        String outPutPattern = outputDir.resolve("frames_04%d.jpg").toString();
+        String outPutPattern = outputDir.resolve("frame_%04d.jpg").toString();
         ProcessBuilder ffmpegCommand = new ProcessBuilder("ffmpeg","-i",videoPath.toString(),
                 "-vf" , "fps="+fps,
                 "-q:v" , "2",
@@ -27,7 +28,15 @@ public class FfmpegService
         try (Stream<Path> stream = Files.list(outputDir))
         {
             return stream.filter(p->
-                    p.getFileName().toString().endsWith(".jpg")).sorted().collect(Collectors.toList());
+                    p.getFileName().toString().endsWith(".jpg"))
+                    .sorted(Comparator.comparingInt(FfmpegService::extractFrameNumber))
+                    .collect(Collectors.toList());
         }
+    }
+
+    static int extractFrameNumber(Path path) {
+        String filename = path.getFileName().toString();
+        String digits = filename.replaceAll("\\D+", "");
+        return digits.isEmpty() ? 0 : Integer.parseInt(digits);
     }
 }
