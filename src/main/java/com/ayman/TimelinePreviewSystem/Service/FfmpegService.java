@@ -1,10 +1,8 @@
 package com.ayman.TimelinePreviewSystem.Service;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,14 +27,9 @@ public class FfmpegService
         {
             return stream.filter(p->
                     p.getFileName().toString().endsWith(".jpg"))
-                    .sorted(Comparator.comparingInt(FfmpegService::extractFrameNumber))
+                    .sorted()
                     .collect(Collectors.toList());
-        }
-    }
 
-    static int extractFrameNumber(Path path) {
-        String filename = path.getFileName().toString();
-        String digits = filename.replaceAll("\\D+", "");
-        return digits.isEmpty() ? 0 : Integer.parseInt(digits);
+        }
     }
 }

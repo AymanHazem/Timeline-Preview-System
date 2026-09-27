@@ -1,5 +1,4 @@
 package com.ayman.TimelinePreviewSystem.Service;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +12,13 @@ import java.util.List;
 public class SpriteService
 {
     @Value("${app.sprite.thumbnail-width:160}")
-    private int THUMBNAIL_WIDTH;
+    private int THUMBNAIL_WIDTH = 160;
 
     @Value("${app.sprite.thumbnail-height:90}")
-    private int THUMBNAIL_HEIGHT;
+    private int THUMBNAIL_HEIGHT = 90;
 
     @Value("${app.sprite.columns:10}")
-    private int COLUMNS;
+    private int COLUMNS = 10;
 
     public int getTHUMBNAIL_WIDTH()
     {
@@ -47,15 +46,18 @@ public class SpriteService
         Graphics2D graphics = spriteSheet.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         graphics.setColor(Color.BLACK);
-        graphics.fillRect(0, 0, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT);
+        graphics.fillRect(0, 0, spriteSheet.getWidth(), spriteSheet.getHeight());
         for (int i = 0; i < totalFrames; i++)
         {
             BufferedImage frame = ImageIO.read(frames.get(i).toFile());
             int col = i%COLUMNS; int row = i/COLUMNS;
             int x = col*THUMBNAIL_WIDTH; int y = row*THUMBNAIL_HEIGHT;
 
-            if(null!=frame)
+            if (null != frame)
+            {
                 graphics.drawImage(frame, x, y, THUMBNAIL_WIDTH , THUMBNAIL_HEIGHT, null);
+                frame.flush();
+            }
         }
         graphics.dispose();
         ImageIO.write(spriteSheet , "jpg" , outputPath.toFile());

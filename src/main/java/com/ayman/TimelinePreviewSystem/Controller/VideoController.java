@@ -3,6 +3,7 @@ import com.ayman.TimelinePreviewSystem.Service.VideoProcessingService;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 @RestController
@@ -54,7 +56,10 @@ public class VideoController
         if (!Files.exists(spritePath))
             return ResponseEntity.notFound().build();
         Resource resource = new FileSystemResource(spritePath);
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(Duration.ofDays(7)).cachePublic().immutable())
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(resource);
 
     }
 
@@ -65,6 +70,9 @@ public class VideoController
         if (!Files.exists(vttPath))
             return ResponseEntity.notFound().build();
         String vttContent = Files.readString(vttPath);
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType("text/vtt")).body(vttContent);
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(Duration.ofDays(7)).cachePublic().immutable())
+                .contentType(MediaType.parseMediaType("text/vtt"))
+                .body(vttContent);
     }
 }
